@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sarah Fashion – Women’s Clothing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F3F8; --ink:#1E1530; --muted:#6B617A; --card:#FFFFFF;
+  --accent:#C2185B; --accent-ink:#FFFFFF; --line:#E1DAE8; --sage:#CFE3D4;
+  --head:'Bricolage Grotesque','Trebuchet MS',sans-serif;
+  --body:'DM Sans',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#171021;--ink:#F3EEF8;--muted:#A99FB8;--card:#231A31;--line:#38294A;--accent:#F06BA8;--accent-ink:#1E1530}
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.55}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--head);font-weight:800;font-size:1.4rem;text-decoration:none;letter-spacing:-.02em}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{text-decoration:none;font-weight:500}
+.nav-links a:hover{color:var(--accent)}
+.cart-btn{background:var(--ink);color:var(--bg);border:0;border-radius:999px;padding:9px 18px;font:700 .95rem var(--body);cursor:pointer}
+.hero{padding:64px 0 48px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+h1{font-family:var(--head);font-weight:800;font-size:clamp(2.6rem,6vw,4.6rem);line-height:1;letter-spacing:-.03em}
+.hero p{margin:20px 0 28px;max-width:46ch;color:var(--muted);font-size:1.1rem}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);padding:14px 28px;border-radius:999px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-family:var(--body);font-size:1rem}
+.btn:hover{filter:brightness(1.08)}
+.hero-art{background:var(--sage);border-radius:200px 200px 24px 24px;aspect-ratio:4/5;display:grid;place-items:center}
+.hero-art svg{width:62%}
+.perks{display:flex;gap:28px;flex-wrap:wrap;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--muted);font-size:.95rem}
+section{padding:56px 0}
+h2{font-family:var(--head);font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.02em;line-height:1.1}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 28px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 18px;border-radius:999px;cursor:pointer;font:500 .95rem var(--body)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+.card{background:var(--card);border-radius:18px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column}
+.thumb{aspect-ratio:1/1.1;display:grid;place-items:center;position:relative}
+.thumb svg{width:55%}
+.tag{position:absolute;top:12px;left:12px;background:var(--accent);color:var(--accent-ink);font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px}
+.info{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.info h3{font-family:var(--head);font-size:1.1rem}
+.info small{color:var(--muted)}
+.price{display:flex;gap:8px;align-items:baseline;font-weight:700}
+.price s{color:var(--muted);font-weight:400;font-size:.9rem}
+.sizes{display:flex;gap:6px;margin:6px 0 10px}
+.sizes button{width:36px;height:34px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;font:500 .85rem var(--body)}
+.sizes button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.add{margin-top:auto;width:100%;padding:11px;border-radius:12px;border:0;background:var(--accent);color:var(--accent-ink);font:700 .95rem var(--body);cursor:pointer}
+.about{background:var(--card);border-block:1px solid var(--line)}
+.about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.about p{color:var(--muted);margin-top:14px;max-width:52ch}
+form.news{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+form.news input{flex:1;min-width:200px;padding:13px 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:1rem var(--body)}
+#msg{margin-top:10px;color:var(--accent);font-weight:500;min-height:1.5em}
+footer{padding:32px 0;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+/* cart drawer */
+#drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,100%);background:var(--card);border-left:1px solid var(--line);z-index:30;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column}
+#drawer.open{transform:none}
+.d-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line)}
+.d-head button{background:none;border:0;font-size:1.6rem;color:var(--ink);cursor:pointer}
+#items{flex:1;overflow:auto;padding:12px 20px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row small{color:var(--muted);display:block}
+.qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer}
+.d-foot{padding:18px 20px;border-top:1px solid var(--line)}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:1.1rem;margin-bottom:12px}
+.empty{color:var(--muted);padding:24px 0}
+#scrim{position:fixed;inset:0;background:rgba(20,10,30,.45);z-index:20;display:none}
+#scrim.open{display:block}
+@media(max-width:760px){
+  .hero-grid,.about .wrap{grid-template-columns:1fr}
+  .hero-art{max-width:320px}
+  .nav-links a.hide{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">Sarah Fashion</a>
+    <nav class="nav-links" aria-label="Main">
+      <a class="hide" href="#shop">Shop</a>
+      <a class="hide" href="#about">About</a>
+      <a class="hide" href="#contact">Contact</a>
+      <button class="cart-btn" id="openCart" aria-label="Open cart">Cart (<span id="count">0</span>)</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <h1>Clothes that fit your day, not just your size.</h1>
+        <p>Easy dresses, tailored tops and wardrobe staples in soft fabrics. New pieces every week, shipped across India.</p>
+        <a class="btn" href="#shop">Shop new arrivals</a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 100 130" fill="#C2185B"><path d="M38 6h24l4 22 16 96H18L34 28z"/><path d="M34 28h32" stroke="#1E1530" stroke-width="3" fill="none"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="wrap perks">
+    <span>Free shipping above ₹1,999</span>
+    <span>Easy 7-day returns</span>
+    <span>Cash on delivery available</span>
+  </div>
+
+  <section id="shop">
+    <div class="wrap">
+      <h2>Shop the collection</h2>
+      <div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div>
+        <h2>Made for real wardrobes</h2>
+        <p>Sarah Fashion started with one idea: good clothes should be comfortable enough to wear all day and simple enough to mix and match. Every piece is checked for fabric feel, fit and wash quality before it reaches you.</p>
+      </div>
+      <div id="contact">
+        <h2>Get 10% off your first order</h2>
+        <p>Join our list for new arrivals and sale alerts.</p>
+        <form class="news" id="news">
+          <input type="email" id="email" placeholder="Your email address" aria-label="Email address" required>
+          <button class="btn" type="submit">Get my code</button>
+        </form>
+        <div id="msg" role="status"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Sarah Fashion. All rights reserved.</span>
+    <span>hello@sarahfashion.example · New Delhi, India</span>
+  </div>
+</footer>
+
+<div id="scrim"></div>
+<aside id="drawer" aria-label="Shopping cart" aria-hidden="true">
+  <div class="d-head"><h2 style="font-size:1.3rem">Your cart</h2><button id="closeCart" aria-label="Close cart">×</button></div>
+  <div id="items"></div>
+  <div class="d-foot">
+    <div class="total"><span>Total</span><span id="total">₹0</span></div>
+    <button class="btn" style="width:100%" id="checkout">Place order</button>
+    <div id="cmsg" role="status" style="margin-top:10px;color:var(--accent);font-weight:500"></div>
+  </div>
+</aside>
+
+<script>
+// Replace the "kind" colours/shapes with real photos by swapping the svg() output for an <img src="..."> tag.
+const PRODUCTS=[
+ {id:1,name:"Wrap Midi Dress",cat:"Dresses",price:2499,old:3199,bg:"#F4D2E0",fill:"#C2185B",tag:"New"},
+ {id:2,name:"Linen Summer Dress",cat:"Dresses",price:1899,bg:"#CFE3D4",fill:"#2F6B4F"},
+ {id:3,name:"Cotton Everyday Tee",cat:"Tops",price:699,bg:"#E8E2F3",fill:"#5B3FA0"},
+ {id:4,name:"Satin Button Shirt",cat:"Tops",price:1399,old:1799,bg:"#FBE3C8",fill:"#B35C1E",tag:"Sale"},
+ {id:5,name:"High-Waist Wide Trousers",cat:"Bottoms",price:1699,bg:"#D5E4F2",fill:"#25557F"},
+ {id:6,name:"Pleated Midi Skirt",cat:"Bottoms",price:1299,bg:"#F4D2E0",fill:"#8E1448"},
+ {id:7,name:"Oversized Blazer",cat:"Outerwear",price:3299,old:3999,bg:"#E1DAE8",fill:"#1E1530",tag:"Sale"},
+ {id:8,name:"Quilted Winter Jacket",cat:"Outerwear",price:3999,bg:"#CFE3D4",fill:"#1F4D38",tag:"New"}
+];
+const SHAPES={
+ Dresses:'<path d="M38 6h24l4 22 16 96H18L34 28z"/>',
+ Tops:'<path d="M30 10l-24 20 12 18 12-8v70h60V40l12 8 12-18L78 10c-4 10-12 14-24 14S34 20 30 10z" transform="translate(-4 0) scale(.95)"/>',
+ Bottoms:'<path d="M24 6h52l8 118H56L50 50l-6 74H16z"/>',
+ Outerwear:'<path d="M34 6l-22 14-6 100h26V50l16 10 16-10v70h26L84 20 62 6 50 22z" transform="translate(2 0)"/>'
+};
+const art=p=>`<svg viewBox="0 0 100 130" fill="${p.fill}" aria-hidden="true">${SHAPES[p.cat]}</svg>`;
+const fmt=n=>"₹"+n.toLocaleString("en-IN");
+const cats=["All",...new Set(PRODUCTS.map(p=>p.cat))];
+const sel={}; // chosen size per product
+let cat="All", cart=[];
+
+function renderFilters(){
+  const f=document.getElementById("filters");
+  f.innerHTML=cats.map(c=>`<button class="chip" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+  f.querySelectorAll("button").forEach(b=>b.onclick=()=>{cat=b.dataset.c;renderFilters();renderGrid()});
+}
+function renderGrid(){
+  const list=PRODUCTS.filter(p=>cat==="All"||p.cat===cat);
+  document.getElementById("grid").innerHTML=list.map(p=>{
+    const s=sel[p.id]||"M";
+    return `<article class="card">
+      <div class="thumb" style="background:${p.bg}">${p.tag?`<span class="tag">${p.tag}</span>`:""}${art(p)}</div>
+      <div class="info">
+        <small>${p.cat}</small><h3>${p.name}</h3>
+        <div class="price">${fmt(p.price)}${p.old?`<s>${fmt(p.old)}</s>`:""}</div>
+        <div class="sizes" role="group" aria-label="Size for ${p.name}">
+          ${["S","M","L","XL"].map(z=>`<button aria-pressed="${z===s}" data-id="${p.id}" data-z="${z}">${z}</button>`).join("")}
+        </div>
+        <button class="add" data-add="${p.id}">Add to cart</button>
+      </div></article>`}).join("");
+  document.querySelectorAll(".sizes button").forEach(b=>b.onclick=()=>{sel[b.dataset.id]=b.dataset.z;renderGrid()});
+  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>add(+b.dataset.add));
+}
+function add(id){
+  const size=sel[id]||"M", k=id+"-"+size, it=cart.find(i=>i.k===k);
+  it?it.q++:cart.push({k,id,size,q:1});
+  renderCart(); openCart();
+}
+function renderCart(){
+  const box=document.getElementById("items");
+  document.getElementById("cmsg").textContent="";
+  if(!cart.length){box.innerHTML='<p class="empty">Your cart is empty. Add something you like.</p>'}
+  else box.innerHTML=cart.map(i=>{
+    const p=PRODUCTS.find(x=>x.id===i.id);
+    return `<div class="row"><div><strong>${p.name}</strong><small>Size ${i.size}</small>
+      <div class="qty"><button data-k="${i.k}" data-d="-1" aria-label="Decrease quantity">−</button>${i.q}<button data-k="${i.k}" data-d="1" aria-label="Increase quantity">+</button></div></div>
+      <strong>${fmt(p.price*i.q)}</strong></div>`}).join("");
+  box.querySelectorAll(".qty button").forEach(b=>b.onclick=()=>{
+    const it=cart.find(i=>i.k===b.dataset.k); it.q+=+b.dataset.d;
+    if(it.q<1)cart=cart.filter(i=>i!==it); renderCart();
+  });
+  const total=cart.reduce((s,i)=>s+PRODUCTS.find(p=>p.id===i.id).price*i.q,0);
+  document.getElementById("total").textContent=fmt(total);
+  document.getElementById("count").textContent=cart.reduce((s,i)=>s+i.q,0);
+}
+const drawer=document.getElementById("drawer"), scrim=document.getElementById("scrim");
+function openCart(){drawer.classList.add("open");scrim.classList.add("open");drawer.setAttribute("aria-hidden","false")}
+function closeCart(){drawer.classList.remove("open");scrim.classList.remove("open");drawer.setAttribute("aria-hidden","true")}
+document.getElementById("openCart").onclick=openCart;
+document.getElementById("closeCart").onclick=closeCart;
+scrim.onclick=closeCart;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCart()});
+document.getElementById("checkout").onclick=()=>{
+  document.getElementById("cmsg").textContent=cart.length
+    ?"Order placed. We’ll email your confirmation shortly."
+    :"Add at least one item before placing an order.";
+  if(cart.length){cart=[];renderCart();document.getElementById("cmsg").textContent="Order placed. We’ll email your confirmation shortly."}
+};
+document.getElementById("news").onsubmit=e=>{
+  e.preventDefault();
+  document.getElementById("msg").textContent="Thanks! Your 10% code is on its way to "+document.getElementById("email").value+".";
+  e.target.reset();
+};
+renderFilters();renderGrid();renderCart();
+</script>
+</body>
+</html>
